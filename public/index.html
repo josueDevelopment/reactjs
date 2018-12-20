@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<title>Document</title>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css?family=Work+Sans|Poppins|Lato|Roboto|Nunito" rel="stylesheet">
+	<link rel="stylesheet" href="./chat.css">
+
+</head>
+<body>
+	<div class="background"></div>
+	<section class="modal">
+		<nav class="header">
+			<i class="icon far fa-user-circle"></i>
+			<h1 class="title">Conversation with Chatbot</h1> 
+		</nav>
+		<section class="messages">
+			<div class="message primary">
+				<span class="text">Hola</span>
+			</div>
+			<div class="message other">
+				<span class="text">Hola Bienvenido!</span>
+			</div>
+			<div class="message primary">
+				<span class="text">me alegra</span>
+			</div>
+			<div class="message other">
+				<span class="text">bien y tu?</span>
+			</div>
+			<div class="message primary">
+				<span class="text">me alegra</span>
+			</div>
+		</section>
+		<form class="form">
+			<div class="input-text-cont">
+				<input class="input-text" type="text" placeholder="Your message">
+			</div>
+			<a class="button-send" href="#"></a>
+			<input class="input-button" type="submit">
+		</form>
+	</section>
+	<span class="credits"><i>Made in Josue with <i class="fas fa-heart"></i></i></span>
+<script>
+
+async function getResponse(){
+	let chat=document.getElementById("chat")
+	let text=document.getElementById("input").value
+	chat.innerHTML+=`<br> <i>${text}</i>`
+	let res=await callApi(text);
+	let data=await res.json()
+	let response=data.result;
+	console.log(response)
+	chat.innerHTML+=`<br> <i>${response.fulfillment.speech}</i>`
+}
+
+
+async function callApi(input){
+let token="532975b4d505412b8be0adefd37fa179";
+	let myHeaders=new Headers({
+		'Content-Type': "application/json; charset=utf-8",
+		"Authorization":`Bearer ${token}`
+	})
+	let baseUrl="https://api.api.ai/v1/query?v=20150910";
+	let options={
+		method:'POST',
+		headers:myHeaders,
+		body:JSON.stringify({ query: input, lang: "es", sessionId: "somerandomthing"})
+	}
+	let res= await fetch(baseUrl,options);
+	return res;
+}
+
+</script>
+</body>
+</html>
