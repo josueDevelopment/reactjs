@@ -1,8 +1,8 @@
 const ExtractTextPlugin=require("mini-css-extract-plugin")
 module.exports={
 	stats: {
-		entrypoints: false,
-		children: false
+		entrypoints: true,
+		children: true
 	},
 	entry:'./src/app/index.js',
 	module:{
